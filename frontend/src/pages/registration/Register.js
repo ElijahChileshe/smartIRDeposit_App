@@ -1,28 +1,23 @@
 import { useState } from "react"
+import { useRegistration } from "../../Hooks/Registration/useRegistration"
 
 const Register = () => {
 
 
-    const [name, setName] = useState('')
+    // const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {register, isLoading, error} = useRegistration()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(name, email, password);
+        await register(email, password);
     }  
 
     return (
         <form className="register" onSubmit={handleSubmit}>
             <h3>Register</h3>
-
-            <label>Name:</label>
-            <input 
-                type="name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-            />
 
             <label>Email:</label>
             <input 
@@ -38,7 +33,8 @@ const Register = () => {
                 value={password}
             />
 
-            <button>Register</button>
+            <button disabled={isLoading}>Register</button>
+            {error && <div className="error">{error}</div>}
         </form>
     )
 } 

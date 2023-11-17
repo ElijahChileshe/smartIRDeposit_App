@@ -3,9 +3,14 @@ require('dotenv').config();
 const user = require("./routes/user/user");
 const registration =  require("./routes/registration/registration")
 const mongoose = require("mongoose")
+const cors = require("cors")
+
 
 // express app
 const app = express()
+
+
+app.use(cors())
 
 // middleware
 app.use((req, res, next) => {
@@ -13,13 +18,13 @@ app.use((req, res, next) => {
     next()
 })
 
+
 app.use(express.json())
 
 
 
 // routes
-app.use(user);
-app.use(registration);
+app.use('/user', registration);
 
 
 // Database setup
@@ -37,5 +42,5 @@ useUnifiedTopology: true,
 
 // port
 app.listen(process.env.PORT, () => {
-    console.log("Listening on port 4000");
+    console.log("Listening on port 4500");
 })
